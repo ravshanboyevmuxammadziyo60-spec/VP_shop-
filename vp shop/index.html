@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Just Ryzen — VP Shop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <style>
+    body { font-family: 'Poppins', sans-serif; -webkit-font-smoothing:antialiased; }
+    .card-hover { transition: transform .18s ease, box-shadow .18s ease; }
+    .card-hover:hover { transform: translateY(-8px); box-shadow: 0 18px 40px rgba(0,0,0,.55); }
+    #cart-sidebar { transition: right .32s cubic-bezier(.2,.9,.2,1); }
+    #welcome-screen { position:fixed;inset:0;background:linear-gradient(180deg,#071026 0%,#0f172a 100%);display:flex;align-items:center;justify-content:center;z-index:60;padding:20px; }
+    .neon { text-shadow: 0 0 10px rgba(255,20,80,.9); }
+  </style>
+</head>
+<body class="bg-black text-white">
+
+  <!-- Welcome / name entry -->
+  <div id="welcome-screen">
+    <div class="max-w-xl w-full text-center p-8 bg-slate-900/60 rounded-2xl glass">
+      <h1 class="text-3xl md:text-4xl font-extrabold neon mb-4">Just Ryzen VP Shop</h1>
+      <p class="text-slate-300 mb-4">Saytga kirish uchun ismingizni kiriting (faqatgina identifikatsiya uchun):</p>
+      <input id="user-name" class="w-full p-3 rounded bg-slate-800 text-white mb-4" placeholder="Ismingiz (masalan: Umar)" />
+      <div class="flex gap-3 justify-center">
+        <button onclick="enterSite()" class="px-6 py-2 bg-rose-600 hover:bg-rose-500 rounded font-semibold">Kirish</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <header id="navbar" class="hidden sticky top-0 z-50 bg-black/70 backdrop-blur">
+    <div class="max-w-7xl mx-auto flex items-center justify-between py-4 px-6">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded bg-gradient-to-tr from-rose-500 to-pink-500 flex items-center justify-center font-bold">JR</div>
+        <div>
+          <div class="text-lg font-extrabold">Just Ryzen</div>
+          <div class="text-sm text-slate-400">Valorant VP shop</div>
+        </div>
+      </div>
+
+      <nav class="flex items-center gap-6 text-sm font-medium">
+        <a href="#paketlar" class="hover:text-rose-400 transition">VP Paketlar</a>
+        <a href="#battlepass" class="hover:text-rose-400 transition">Battle Pass</a>
+        <a href="#sayt-haqida" class="hover:text-rose-400 transition">Sayt haqida</a>
+        <a href="#promo" class="hover:text-rose-400 transition">Promo</a>
+        <a href="#aloqa" class="hover:text-rose-400 transition">Aloqa</a>
+        <button onclick="toggleCart()" class="ml-2 bg-rose-600 px-3 py-2 rounded hover:bg-rose-500">🛒 <span id="cart-count">0</span></button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero (hidden until enter) -->
+  <section id="hero" class="hidden text-center py-20 px-6 bg-gradient-to-r from-rose-600 to-pink-600">
+    <h2 class="text-4xl md:text-6xl font-extrabold neon" data-aos="fade-up">Valorant VP — tez, ishonchli, xavfsiz</h2>
+    <p class="text-slate-200 max-w-2xl mx-auto mt-4" data-aos="fade-up" data-aos-delay="120">Just Ryzen bilan o'yiningizni yangi darajaga olib chiqing. VP paketlari, Battle Pass va skinlar — bir joyda.</p>
+    <div class="mt-8"><a href="#paketlar" class="px-6 py-3 bg-black rounded font-bold hover:scale-105">Paketlarni ko‘rish</a></div>
+  </section>
+
+  <!-- Packages -->
+  <section id="paketlar" class="hidden max-w-7xl mx-auto py-16 px-6">
+    <h3 class="text-3xl font-bold text-center mb-8" data-aos="fade-up">VP Paketlar</h3>
+    <div id="package-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"></div>
+  </section>
+
+  <!-- Battle Pass -->
+  <section id="battlepass" class="hidden bg-white text-black py-16 px-6">
+    <div class="max-w-5xl mx-auto text-center">
+      <h3 class="text-3xl font-bold mb-6" data-aos="fade-up">Battle Pass</h3>
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div class="bg-black text-white p-6 rounded-2xl card-hover" data-aos="fade-up">
+          <div class="h-44 bg-slate-800 rounded mb-4 flex items-center justify-center"> <!-- replace image --> <img src="./img/image.png" alt="" class="object-cover h-40 rounded"></div>
+          <h4 class="font-bold text-xl">Battle Pass — Oddiy</h4>
+          <p class="text-slate-300 mb-4">Narxi: 130,000 so‘m</p>
+          <button onclick="addToCart('Battle Pass (Oddiy)','130000 so‘m')" class="w-full bg-rose-600 px-3 py-2 rounded">Savatga qo‘shish</button>
+        </div>
+        <div class="bg-white text-black p-6 rounded-2xl card-hover" data-aos="fade-up" data-aos-delay="80">
+          <div class="h-44 bg-slate-100 rounded mb-4 flex items-center justify-center"><img src="./img/image copy.png" alt="" class="object-cover h-40 rounded"></div>
+          <h4 class="font-bold text-xl">Battle Pass — Premium</h4>
+          <p class="text-slate-800 mb-4">Narxi: 250,000 so‘m</p>
+          <button onclick="addToCart('Battle Pass (Premium)','250000 so‘m')" class="w-full bg-rose-600 px-3 py-2 rounded text-white">Savatga qo‘shish</button>
+        </div>
+        <div class="bg-black text-white p-6 rounded-2xl card-hover" data-aos="fade-up" data-aos-delay="160">
+          <div class="h-44 bg-slate-800 rounded mb-4 flex items-center justify-center"><img src="./img/image copy 2.png" alt="" class="object-cover h-40 rounded"></div>
+          <h4 class="font-bold text-xl">Battle Pass — Bundle</h4>
+          <p class="text-slate-300 mb-4">Narxi: 400,000 so‘m</p>
+          <button onclick="addToCart('Battle Pass (Bundle)','400000 so‘m')" class="w-full bg-rose-600 px-3 py-2 rounded">Savatga qo‘shish</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- About -->
+  <section id="sayt-haqida" class="hidden bg-black py-16 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <h3 class="text-3xl font-bold mb-4" data-aos="fade-up">Biz haqimizda</h3>
+      <p class="text-slate-300 leading-relaxed" data-aos="fade-up" data-aos-delay="80">
+        Just Ryzen VP Shop — ishonchli onlayn platforma. Biz VP yetkazib berish xizmatida tezlik, xavfsizlik va shaffoflikni birinchi o‘ringa qo‘yganmiz. Buyurtma berish oson, savat orqali bir necha qadamda amalga oshadi va barcha ma'lumotlar siz ko‘rsatgan Telegram lichkasiga yetkaziladi.
+      </p>
+    </div>
+  </section>
+
+  <!-- Promo -->
+  <section id="promo" class="hidden bg-white text-black py-16 px-6">
+    <div class="max-w-lg mx-auto text-center">
+      <h3 class="text-2xl font-bold mb-4" data-aos="fade-up">Promo kod</h3>
+      <input id="promo-input" class="w-full p-3 rounded border mb-3" placeholder="Promo kod (masalan: RYZEN10)" />
+      <button onclick="applyPromo()" class="w-full bg-rose-600 px-3 py-2 rounded text-white">Qo‘llash</button>
+      <p id="promo-message" class="mt-3 font-semibold"></p>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="aloqa" class="hidden py-16 px-6">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-8">
+      <div data-aos="fade-up">
+        <h4 class="text-2xl font-bold mb-2">Biz bilan bog‘laning</h4>
+        <p class="text-slate-300 mb-4">Telefon, email yoki telegram orqali.</p>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="bg-white/5 p-4 rounded">📍 <b>Manzil:</b><div class="text-slate-300">Toshkent, Chilonzor 9</div></div>
+          <div class="bg-white/5 p-4 rounded">📞 <b>Telefon:</b><div class="text-slate-300">+998 93 580 39 98</div></div>
+          <div class="bg-white/5 p-4 rounded">📧 <b>Email:</b><div class="text-slate-300">support@ryzen-vp.uz</div></div>
+          <div class="bg-white/5 p-4 rounded">💬 <b>Telegram:</b><div class="text-rose-400">@just_ryzen</div></div>
+        </div>
+      </div>
+
+      <div data-aos="fade-up" data-aos-delay="80">
+        <h4 class="text-2xl font-bold mb-2">Xabar yuborish</h4>
+        <form id="contact-form" class="space-y-3">
+          <input id="c-name" class="w-full p-3 rounded bg-slate-900" placeholder="Ismingiz" required>
+          <input id="c-email" type="email" class="w-full p-3 rounded bg-slate-900" placeholder="Email" required>
+          <textarea id="c-msg" class="w-full p-3 rounded bg-slate-900" rows="4" placeholder="Xabaringiz"></textarea>
+          <button type="submit" class="w-full bg-rose-600 px-3 py-2 rounded">Yuborish</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer" class="hidden text-center py-8 text-slate-400 bg-black/70">
+    © <span id="year"></span> Just Ryzen VP Shop — Barcha huquqlar himoyalangan.
+  </footer>
+
+  <!-- Cart sidebar -->
+  <aside id="cart-sidebar" class="fixed top-0 right-[-100%] w-96 h-full bg-slate-900 p-6 z-50 overflow-y-auto">
+    <div class="flex items-center justify-between mb-4">
+      <h4 class="text-xl font-bold">Savatcha</h4>
+      <button onclick="toggleCart()" class="text-slate-300">Yopish ✖</button>
+    </div>
+    <ul id="cart-items" class="space-y-3 mb-4"></ul>
+    <div id="cart-summary" class="mb-4 font-bold">Jami: 0 so‘m</div>
+
+    <form id="checkout-form" class="space-y-3">
+      <input id="f-name" type="text" placeholder="Ism" required class="w-full p-3 rounded bg-slate-800">
+      <input id="f-phone" type="tel" placeholder="Telefon raqam" required class="w-full p-3 rounded bg-slate-800">
+      <input id="f-email" type="email" placeholder="Email" required class="w-full p-3 rounded bg-slate-800">
+      <input id="f-address" type="text" placeholder="Manzil (tuman/shahar)" required class="w-full p-3 rounded bg-slate-800">
+      <button type="submit" class="w-full bg-rose-600 px-3 py-2 rounded">Buyurtma berish</button>
+    </form>
+  </aside>
+
+  <!-- SCRIPTS -->
+  <script>
+    // CONFIG: Telegram username (yoki bot chat username)
+    const TELEGRAM_USERNAME = "just_ryzen"; // <= siz bergan username
+
+    // Data: VP paketlar (uzun ro'yxat; istasangiz ko'proq satr qo'shing)
+    const PACKAGES = [
+      500, 1050, 2100, 3650, 5350, 7000, 8500, 10000, 12000, 15000, 18000, 20000,
+      25000, 30000, 50000
+    ];
+
+    // Initial UI show/hide logic
+    function enterSite(){
+      const name = document.getElementById('user-name').value.trim();
+      if(!name){ alert("Ismingizni kiriting!"); return; }
+      // store user name if needed
+      sessionStorage.setItem('jr_name', name);
+      document.getElementById('welcome-screen').style.display='none';
+      ['navbar','hero','paketlar','battlepass','skinlar','sayt-haqida','promo','aloqa','footer'].forEach(id=>{
+        const el=document.getElementById(id);
+        if(el) el.classList.remove('hidden');
+      });
+      renderPackages();
+      document.getElementById('year').textContent = new Date().getFullYear();
+    }
+
+    // Render packages grid
+    function renderPackages(){
+      const grid = document.getElementById('package-grid');
+      grid.innerHTML = '';
+      PACKAGES.forEach((vp, i) => {
+        const price = formatPrice(vp);
+        const card = document.createElement('div');
+        card.className = 'bg-white text-black p-6 rounded-2xl card-hover';
+        card.setAttribute('data-aos','fade-up');
+        card.innerHTML = `
+          <h4 class="text-xl font-bold mb-2">${vp} VP</h4>
+          <p class="text-slate-700 mb-4">Narxi: ${price}</p>
+          <div class="flex gap-2">
+            <button class="flex-1 bg-rose-600 px-3 py-2 rounded text-white" onclick="addToCart('${vp} VP','${price}')">Savatga qo‘shish</button>
+            <button class="px-3 py-2 border rounded" onclick="quickBuy('${vp} VP','${price}')">Tez sotib olish</button>
+          </div>`;
+        grid.appendChild(card);
+      });
+    }
+
+    function formatPrice(vp){
+      // example rough pricing: 1 VP = 100 so'm (tahrirlash mumkin)
+      const som = Math.round(vp * 100);
+      return som.toLocaleString() + " so‘m";
+    }
+
+    // Cart logic
+    let cart = [];
+    let promoActive = false;
+    function addToCart(name, price){
+      cart.push({name, price});
+      updateCartUI();
+    }
+    function updateCartUI(){
+      const items = document.getElementById('cart-items');
+      items.innerHTML = '';
+      let sum = 0;
+      cart.forEach((it, idx) => {
+        items.innerHTML += `<li class="flex justify-between"><span>${it.name}</span><span>${it.price}</span></li>`;
+        sum += parseInt(it.price.replace(/[^0-9]/g,''));
+      });
+      if(promoActive) sum = Math.round(sum * 0.9);
+      document.getElementById('cart-summary').innerText = (promoActive ? 'Chegirmali jami: ' : 'Jami: ') + sum.toLocaleString() + " so‘m";
+      document.getElementById('cart-count').innerText = cart.length;
+    }
+
+    function quickBuy(name, price){
+      // add and open cart
+      addToCart(name, price);
+      toggleCart();
+    }
+
+    function toggleCart(){
+      const side = document.getElementById('cart-sidebar');
+      side.style.right = (side.style.right === '0px') ? '-100%' : '0px';
+    }
+
+    // Checkout -> send to Telegram (opens t.me/just_ryzen?text=...)
+    document.getElementById('checkout-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      if(cart.length === 0){ alert('Savat bo‘sh! Avval paket yoki skin qo‘shing.'); return; }
+      const name = document.getElementById('f-name').value.trim();
+      const phone = document.getElementById('f-phone').value.trim();
+      const email = document.getElementById('f-email').value.trim();
+      const address = document.getElementById('f-address').value.trim();
+      if(!name || !phone || !email || !address){ alert('Iltimos, barcha maydonlarni to‘ldiring.'); return; }
+
+      const orderLines = cart.map(c => `${c.name} (${c.price})`).join(' | ');
+      const userFrom = sessionStorage.getItem('jr_name') || name;
+      const message = `Yangi buyurtma:%0AIsm: ${encodeURIComponent(userFrom)}%0ATalab qiluvchi: ${encodeURIComponent(name)}%0ATel: ${encodeURIComponent(phone)}%0AEmail: ${encodeURIComponent(email)}%0AManzil: ${encodeURIComponent(address)}%0ABuyurtma: ${encodeURIComponent(orderLines)}`;
+      // open Telegram chat with prefilled text (user will press send)
+      const url = `https://t.me/${just_ryzen}?text=${vp }`;
+      window.open(url, '_blank');
+
+      // optional: clear cart & UI
+      cart = [];
+      updateCartUI();
+      toggleCart();
+      alert('Buyurtma ma\'lumotlari Telegram-ga yuburildi — iltimos chatdan tasdiqlang.');
+    });
+
+    // Promo
+    function applyPromo(){
+      const code = (document.getElementById('promo-input').value || '').trim().toLowerCase();
+      const msg = document.getElementById('promo-message');
+      if(code === 'ryzen10'){ promoActive = true; msg.innerText = '✅ 10% chegirma qo‘llandi'; updateCartUI(); }
+      else { promoActive = false; msg.innerText = '❌ Noto‘g‘ri promo kod'; updateCartUI(); }
+    }
+
+    // Contact form
+    document.getElementById('contact-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      const cn = document.getElementById('c-name').value || 'Anon';
+      const ce = document.getElementById('c-email').value || '';
+      const cm = document.getElementById('c-msg').value || '';
+      alert('Xabaringiz qabul qilindi. Tez orada javob beramiz.');
+      // could also forward to Telegram similarly if desired
+      this.reset();
+    });
+
+    // Skins: generate 100+ cards (use your own images named skin1.jpg .. skin100.jpg)
+    function loadSkins(){
+      const grid = document.getElementById('skin-grid');
+      if(grid.children.length) return; // prevent reload
+      for(let i=1;i<=120;i++){
+        const price = (i * 10000).toLocaleString() + ' so‘m';
+        const card = document.createElement('div');
+        card.className = 'bg-white text-black p-4 rounded-2xl card-hover';
+        card.setAttribute('data-aos','fade-up');
+        card.innerHTML = `
+          <div class="h-40 bg-slate-200 rounded mb-3 flex items-center justify-center overflow-hidden">
+            <img src="skin${i}.jpg" alt="Skin ${i}" class="object-cover h-full w-full">
+          </div>
+          <h5 class="font-bold mb-1">Skin ${i}</h5>
+          <p class="text-slate-700 mb-3">${price}</p>
+          <button onclick="addToCart('Skin ${i}','${price}')" class="w-full bg-rose-600 px-3 py-2 rounded text-white">Savatga qo‘shish</button>
+        `;
+        grid.appendChild(card);
+      }
+      // show skins section (if hidden)
+      document.getElementById('skinlar').classList.remove('hidden');
+    }
+
+    // page utils
+    function formatNumber(n){ return n.toLocaleString(); }
+
+    // init AOS later after elements created
+    window.addEventListener('load', () => {
+      AOS.init({duration:700, once:true});
+    });
+
+    // show year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+  <!-- AOS -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+</body>
+</html>
